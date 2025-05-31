@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Informasi Kelulusan</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            background-image: url('gunung_slamet_background.jpg'); /* Ganti dengan nama file background Anda */
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: #333;
+            position: relative; /* Untuk menampung animasi absolute */
+            overflow: hidden; /* Menyembunyikan overflow kembang api */
+        }
+
+        .kelulusan-container {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        #amplop-container {
+            position: relative;
+            width: 150px;
+            height: 100px;
+            margin: 20px auto;
+            cursor: pointer;
+        }
+
+        #amplop {
+            width: 100%;
+            height: 100%;
+            background-image: url('amplop_tertutup.png'); /* Ganti dengan gambar amplop tertutup Anda */
+            background-size: contain;
+            background-repeat: no-repeat;
+            position: absolute;
+            transition: transform 1s ease-in-out;
+        }
+
+        #isi-amplop {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            z-index: 10;
+            opacity: 0;
+            transition: transform 1s ease-in-out, opacity 1s ease-in-out;
+        }
+
+        #isi-amplop p {
+            margin: 0;
+        }
+
+        .kembang-api {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background-image: url('kembang_api.gif'); /* Ganti dengan gambar/gif kembang api Anda */
+            background-size: contain;
+            pointer-events: none; /* Agar tidak mengganggu interaksi */
+            animation: fireworks 0.5s ease-out forwards;
+        }
+
+        @keyframes fireworks {
+            0% { opacity: 1; transform: translate(-50%, -50%) scale(0); }
+            100% { opacity: 0; transform: translate(calc(var(--x)), calc(var(--y))) scale(1.5); }
+        }
+
+        .muncul {
+            transform: translate(-50%, -50%) scale(1) !important;
+            opacity: 1 !important;
+        }
+
+        .terbuka {
+            transform: rotateX(-180deg) !important;
+        }
+
+        audio {
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <audio controls autoplay loop>
+        <source src="lagu_perpisahan.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+    <div class="kelulusan-container">
+        <h2>Pengumuman Kelulusan</h2>
+        <div id="amplop-container">
+            <div id="amplop"></div>
+            <div id="isi-amplop">
+                <p id="pesan-kelulusan"></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const amplopContainer = document.getElementById('amplop-container');
+        const amplop = document.getElementById('amplop');
+        const isiAmplop = document.getElementById('isi-amplop');
+        const pesanKelulusan = document.getElementById('pesan-kelulusan');
+        const namaSiswa = localStorage.getItem('namaSiswa');
+
+        amplopContainer.addEventListener('click', () => {
+            amplop.classList.add('terbuka');
+            setTimeout(() => {
+                isiAmplop.classList.add('muncul');
+                pesanKelulusan.innerHTML = `Assalamu'alaikum wr.wb, Selamat <strong>${namaSiswa}</strong>, Anda dinyatakan <strong>Lulus</strong> dari MTs Unggulan Minhajut Tholabah Angkatan 2025. Perjalanan belum usai, rangkaian cerita indah baru saja di mulai. Semoga selalu sukses di masa depan`;
+                tampilkanKembangApi();
+                tampilkanKembangApi();
+                tampilkanKembangApi();
+            }, 1000); // Delay agar animasi membuka amplop terlihat
+        });
+
+        function tampilkanKembangApi() {
+            const kembangApi = document.createElement('div');
+            kembangApi.classList.add('kembang-api');
+            const x = Math.random() * window.innerWidth;
+            const y = Math.random() * window.innerHeight;
+            kembangApi.style.setProperty('--x', `${x}px`);
+            kembangApi.style.setProperty('--y', `${y}px`);
+            document.body.appendChild(kembangApi);
+            setTimeout(() => {
+                kembangApi.remove();
+            }, 500); // Durasi animasi kembang api
+        }
+    </script>
+</body>
+</html>
