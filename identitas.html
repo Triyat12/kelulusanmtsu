@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Identitas Siswa</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            background-image: url('gunung_slamet_background.jpg'); /* Ganti dengan nama file background Anda */
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .profile-container {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        .info {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .info strong {
+            display: inline-block;
+            width: 80px;
+            font-weight: bold;
+        }
+
+        button {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background-color: #1e7e34;
+        }
+
+        audio {
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <audio controls autoplay loop>
+        <source src="musik_tegang.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+    <div class="profile-container">
+        <h2>Identitas Siswa</h2>
+        <div id="dataSiswa">
+            </div>
+        <button onclick="cekKelulusan()">Cek Kelulusan</button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const namaSiswa = localStorage.getItem('namaSiswa');
+            const dataSiswaDiv = document.getElementById('dataSiswa');
+
+            // Data siswa statis (ganti dengan data dari database atau sumber lain)
+            const data = {
+                "Budi": { nama: "Budi Santoso", kelas: "IX-A", nisn: "0012345678", alamat: "Jl. Merdeka No. 1" },
+                "Siti": { nama: "Siti Aminah", kelas: "IX-B", nisn: "0087654321", alamat: "Gg. Mawar No. 5" }
+                // Tambahkan data siswa lainnya di sini
+            };
+
+            if (namaSiswa && data[namaSiswa]) {
+                const siswa = data[namaSiswa];
+                dataSiswaDiv.innerHTML = `
+                    <div class="info"><strong>Nama:</strong> ${siswa.nama}</div>
+                    <div class="info"><strong>Kelas:</strong> ${siswa.kelas}</div>
+                    <div class="info"><strong>NISN:</strong> ${siswa.nisn}</div>
+                    <div class="info"><strong>Alamat:</strong> ${siswa.alamat}</div>
+                `;
+            } else {
+                dataSiswaDiv.innerHTML = '<p>Data siswa tidak ditemukan.</p>';
+                // Mungkin redirect kembali ke halaman login jika nama siswa tidak ada di localStorage
+                // window.location.href = 'index.html';
+            }
+        });
+
+        function cekKelulusan() {
+            window.location.href = 'kelulusan.html';
+        }
+    </script>
+</body>
+</html>
